@@ -6,9 +6,9 @@ PATHS = etc lib usr var
 DEB_BUILD_ROOT = build
 VERNEMQ_BUILD_DIR = $(VERNEMQ_DIR)/_build/default/rel/vernemq
 
-dist : clean pkg
+dist : clean checkout pkg
 
-pkg : checkout build assemble
+pkg : build assemble
 	fpm -s dir \
 		-t deb \
 		-n $(NAME) \
