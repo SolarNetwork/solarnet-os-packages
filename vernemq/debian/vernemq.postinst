@@ -23,8 +23,8 @@ after_install() {
 			  --gecos "VerneMQ broker" vernemq
 	fi
 
-	for i in lib log; do
-		chown -R vernemq:vernemq /var/$i/vernemq
+	for f in /etc/vernemq /var/lib/vernemq /var/log/vernemq; do
+		chown -R vernemq:vernemq $f
 	done
 
 	systemctl --system daemon-reload >/dev/null || true

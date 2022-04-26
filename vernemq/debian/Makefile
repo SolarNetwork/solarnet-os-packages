@@ -1,5 +1,5 @@
 NAME = vernemq
-VERNEMQ_VERSION = 1.12.5
+VERNEMQ_VERSION = 1.12.4
 VERSION = $(VERNEMQ_VERSION)-1
 VERNEMQ_DIR = vernemq
 PATHS = etc lib usr var
@@ -18,8 +18,11 @@ pkg : checkout build assemble
 		--description 'VerneMQ MQTT broker' \
 		--license 'Apache 2.0' \
 		-f \
-		-d 'erlang-base' \
-		-d 'libsnappy1v5' \
+		-d 'libsnappy1v5 (>= 1.1.8)' \
+		-d 'libc6 (>= 2.17)' \
+		-d 'libgcc-s1 (>= 3.0)' \
+		-d 'libssl1.1 (>= 1.1.1)' \
+		-d 'libstdc++6 (>= 5.2)' \
 		--after-install $(NAME).postinst \
 		--before-remove $(NAME).prerm \
 		--chdir $(DEB_BUILD_ROOT) \
@@ -49,9 +52,9 @@ $(DEB_BUILD_ROOT) : build
 	mkdir -p $(DEB_BUILD_ROOT)/var/log
 	cp -a $(VERNEMQ_BUILD_DIR) $(DEB_BUILD_ROOT)/usr/lib
 	mv $(DEB_BUILD_ROOT)/usr/lib/vernemq/etc $(DEB_BUILD_ROOT)/etc/vernemq
-	cp -a $(DEB_BUILD_ROOT)/usr/lib/vernemq/bin/vernemq $(DEB_BUILD_ROOT)/usr/bin
-	cp -a $(DEB_BUILD_ROOT)/usr/lib/vernemq/bin/vmq-admin $(DEB_BUILD_ROOT)/usr/bin
-	cp -a $(DEB_BUILD_ROOT)/usr/lib/vernemq/bin/vmq-passwd $(DEB_BUILD_ROOT)/usr/bin
+	ln $(DEB_BUILD_ROOT)/usr/lib/vernemq/bin/vernemq $(DEB_BUILD_ROOT)/usr/bin
+	ln $(DEB_BUILD_ROOT)/usr/lib/vernemq/bin/vmq-admin $(DEB_BUILD_ROOT)/usr/bin
+	ln $(DEB_BUILD_ROOT)/usr/lib/vernemq/bin/vmq-passwd $(DEB_BUILD_ROOT)/usr/bin
 	mv $(DEB_BUILD_ROOT)/usr/lib/vernemq/share $(DEB_BUILD_ROOT)/usr/share/vernemq
 	mv $(DEB_BUILD_ROOT)/usr/lib/vernemq/data $(DEB_BUILD_ROOT)/var/lib/vernemq
 	mv $(DEB_BUILD_ROOT)/usr/lib/vernemq/log $(DEB_BUILD_ROOT)/var/log/vernemq
