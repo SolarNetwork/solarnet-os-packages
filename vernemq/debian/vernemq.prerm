@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+before_remove() {
+	systemctl disable --now vernemq >/dev/null || true
+	systemctl --system daemon-reload >/dev/null || true
+}
+
+if [ "${1}" = "remove" -a -z "${2}" ]; then
+	before_remove
+elif [ "${1}" = "upgrade" ]; then
+    : # nothing
+elif echo "${1}" | grep -E -q "(fail|abort)"; then
+	echo "Failed to install before the pre-removal script was run." >&2
+	exit 1
+fi
