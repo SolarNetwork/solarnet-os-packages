@@ -13,7 +13,6 @@ pkg : checkout build assemble
 		-t deb \
 		-n $(NAME) \
 		-v $(VERSION) \
-		-a all \
 		-m 'packaging@solarnetwork.org.nz' \
 		--vendor 'SolarNetwork Foundation' \
 		--description 'VerneMQ MQTT broker' \
@@ -29,7 +28,7 @@ pkg : checkout build assemble
 clean :
 	git -C $(VERNEMQ_DIR) clean -fdxq
 	rm -rf $(DEB_BUILD_ROOT)
-	rm -f $(NAME)_$(VERSION)_all.deb
+	rm -f $(NAME)_$(VERSION)_*.deb
 
 checkout :
 	git -C $(VERNEMQ_DIR) checkout $(VERNEMQ_VERSION)
