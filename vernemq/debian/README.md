@@ -24,6 +24,19 @@ sudo apt-get install ruby ruby-dev build-essential git libsnappy-dev
 sudo gem install --no-ri --no-rdoc fpm
 ```
 
+To include a custom Erlang runtime, build Erlang/OTP from source and add it to your `PATH`, for
+example:
+
+```
+git clone https://github.com/erlang/otp.git
+cd otp
+git checkout OTP-24.2.2
+./configure --prefix=$PWD/../erlang
+make -j 4 && make install
+cd ..
+export PATH=$PWD/erlang/bin:$PATH
+```
+
 You must then check out the VerneMQ source into a `vernemq` directory within this directory:
 
 ```sh
