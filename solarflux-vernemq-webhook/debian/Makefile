@@ -1,6 +1,6 @@
 NAME = solarflux-vernemq-webhook
 DIST = 
-VERSION = 1.1.0-1$(if $(DIST),+$(DIST),)
+VERSION = 1.2.0-1$(if $(DIST),+$(DIST),)
 PATHS = lib usr var
 APP_BUILD_ROOT = solarflux-vernemq-webhook
 ASSEMBLE_DIR = assemble
