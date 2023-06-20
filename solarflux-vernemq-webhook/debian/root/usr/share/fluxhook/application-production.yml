@@ -1,6 +1,6 @@
 logging:
-  config: /var/lib/fluxhook/solarflux-vernemq-webhook-logback.xml
-  file.name: /var/log/fluxhook/solarflux-vernemq-webhook.log
+  config: /var/lib/fluxhook/application-logback.xml
+  file.name: /var/log/fluxhook/fluxhook.log
 
 spring:
   datasource:

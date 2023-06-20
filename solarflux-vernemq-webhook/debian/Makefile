@@ -1,10 +1,9 @@
 NAME = solarflux-vernemq-webhook
 DIST = 
 VERSION = 1.1.0-1$(if $(DIST),+$(DIST),)
-PATHS = lib var
+PATHS = lib usr var
 APP_BUILD_ROOT = solarflux-vernemq-webhook
 ASSEMBLE_DIR = assemble
-CONF_NAME = example
 
 all : build assemble package
 
@@ -19,7 +18,6 @@ assemble: build app_version
 	rm -rf $(ASSEMBLE_DIR)
 	mkdir $(ASSEMBLE_DIR)
 	cp -a root/* $(ASSEMBLE_DIR)
-	cp -a conf/$(CONF_NAME)/* $(ASSEMBLE_DIR)/var/lib/fluxhook
 	cp -a $(APP_BUILD_ROOT)/build/libs/solarflux-vernemq-webhook-$(APP_VERSION).jar $(ASSEMBLE_DIR)/var/lib/fluxhook
 	ln -s solarflux-vernemq-webhook-$(APP_VERSION).jar $(ASSEMBLE_DIR)/var/lib/fluxhook/solarflux-vernemq-webhook.jar
 	find assemble \( -name .gitignore -or -name .DS_Store \) -delete

@@ -48,6 +48,21 @@ setup_write_dir () {
 # make sure runtime write directories exist and have correct permissions
 setup_write_dir "${LOG_DIR}"
 
+PROD_CONF="${WEBHOOK_HOME}/application-production.yml"
+PROD_CONF_SRC="/usr/share/fluxhook/application-production.yml"
+LOG_CONF="${WEBHOOK_HOME}/application-logback.xml"
+LOG_CONF_SRC="/usr/share/fluxhook/application-logback.xml"
+
+if [ ! -e "$PROD_CONF" -a -e "$PROD_CONF_SRC" ]; then
+	echo "Creating default SolarFlux Webhook configuration $PROD_CONF"
+	cp "$PROD_CONF_SRC" "$PROD_CONF"
+fi
+
+if [ ! -e "$LOG_CONF" -a -e "$LOG_CONF_SRC" ]; then
+	echo "Creating default SolarFlux Webhook logging configuration $LOG_CONF"
+	cp "$LOG_CONF_SRC" "$LOG_CONF"
+fi
+
 systemctl daemon-reload || true
 service_up fluxhook.service
 
