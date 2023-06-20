@@ -1,5 +1,5 @@
 NAME = vernemq
-VERNEMQ_VERSION = 1.12.4
+VERNEMQ_VERSION = 1.13.0
 VERSION = $(VERNEMQ_VERSION)-1
 VERNEMQ_DIR = vernemq
 PATHS = etc lib usr var
