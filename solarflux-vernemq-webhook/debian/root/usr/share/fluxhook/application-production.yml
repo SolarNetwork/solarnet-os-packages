@@ -1,0 +1,37 @@
+logging:
+  config: /var/lib/fluxhook/application-logback.xml
+  file.name: /var/log/fluxhook/fluxhook.log
+
+spring:
+  datasource:
+    url: jdbc:postgresql://172.16.159.1:5412/solarnetwork
+    username: solarnet
+    password: solarnet
+    tomcat:
+      initialSize: 1
+      maxActive: 15
+      minIdle: 1
+      maxIdle: 2
+
+app.datasource.audit:
+  driverClassName: org.postgresql.Driver
+  url: jdbc:postgresql://172.16.159.1:5412/solarnetwork
+  username: solarnet
+  password: solarnet
+  tomcat:
+    defaultReadOnly: false
+    initialSize: 1
+    maxActive: 2
+    minIdle: 1
+    maxIdle: 1
+    testOnBorrow: true
+    testWhileIdle: false
+    validationQuery: SELECT CURRENT_DATE
+    timeBetweenEvictionRunsMillis: 35000
+    minEvictableIdleTimeMillis: 55000
+    validationInterval: 35000
+    removeAbandoned: true
+    removeAbandonedTimeout: 600
+
+app.audit.jdbc:
+  statLogUpdateCount: 10

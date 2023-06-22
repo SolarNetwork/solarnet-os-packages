@@ -1,0 +1,41 @@
+#!/bin/sh
+set -e
+
+after_upgrade() {
+	systemctl --system daemon-reload >/dev/null || true
+	if systemctl is-enabled vernemq >/dev/null; then
+		systemctl restart vernemq >/dev/null || true
+	fi
+}
+
+after_install() {
+	# create group
+	if ! getent group vernemq >/dev/null; then
+	  addgroup --system vernemq
+	fi
+
+	# create user
+	if ! getent passwd vernemq >/dev/null; then
+	  adduser --ingroup vernemq \
+			  --home /var/lib/vernemq \
+			  --disabled-password \
+			  --system --shell /bin/bash --no-create-home \
+			  --gecos "VerneMQ broker" vernemq
+	fi
+
+	for f in /etc/vernemq /var/lib/vernemq /var/log/vernemq; do
+		chown -R vernemq:vernemq $f
+	done
+
+	systemctl --system daemon-reload >/dev/null || true
+}
+
+if [ "${1}" = "configure" -a -z "${2}" ] || \
+   [ "${1}" = "abort-remove" ]; then
+	after_install
+elif [ "${1}" = "configure" -a -n "${2}" ]; then
+	after_upgrade
+elif echo "${1}" | grep -E -q "(abort|fail)"; then
+	echo "Failed to install before the post-installation script was run." >&2
+	exit 1
+fi
