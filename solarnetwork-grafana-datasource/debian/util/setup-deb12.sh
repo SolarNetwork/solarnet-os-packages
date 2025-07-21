@@ -27,6 +27,7 @@ nvm install 14
 mkdir -p ~/go
 git clone https://github.com/magefile/mage
 cd mage
+go run bootstrap.go
 export PATH=$PATH:~/go/bin
 
 cd ..
