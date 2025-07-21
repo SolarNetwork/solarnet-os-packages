@@ -6,3 +6,5 @@ Then:
 ```sh
 make DIST=bookworm
 ```
+
+> :warning: **Note** that the plugin build requires a few GB of disk space to complete.
