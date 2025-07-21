@@ -7,4 +7,7 @@ Then:
 make DIST=bookworm
 ```
 
+> :tip: **Note** that the package will be for all architectures, but only `arm64` and `amd64` are
+> actually supported.
+
 > :warning: **Note** that the plugin build requires a few GB of disk space to complete.
