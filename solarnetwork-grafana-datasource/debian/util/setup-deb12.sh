@@ -3,6 +3,7 @@
 PKG_HOLD="${PKG_HOLD:-linux-image*}"
 PKG_BRANCH="${PKG_BRANCH:-develop}"
 DS_BRANCH="${DS_BRANCH:-develop}"
+NODE_VERSION="${NODE_VERSION:-18}"
 
 # might need to hold kernel packages, e.g.
 if [ -n "$PKG_HOLD" ]; then
@@ -28,8 +29,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# switch to node 14
-nvm install 14
+# switch to specific node
+nvm install $NODE_VERSION
 
 # install mage
 mkdir -p ~/go
@@ -61,6 +62,7 @@ export GOTMPDIR="/var/tmp"
 
 # build plugin
 npm run build
+mage
 
 # build package
 cd ..
