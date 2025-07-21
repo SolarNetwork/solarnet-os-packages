@@ -15,7 +15,7 @@ deb : prep
 		--url "https://github.com/SolarNetwork/solarnet-os-packages/tree/develop/solarnetwork-grafana-datasource/debian" \
 		--force \
 		--after-install $(NAME).postinst \
-		--after-remove $(NAME).postrm \
+		--depends 'grafana (>= 10)' \
 		var
 	
 prep :
