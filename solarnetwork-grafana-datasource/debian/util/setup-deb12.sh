@@ -1,8 +1,13 @@
 #!/bin/sh
 
-# might need to hold kernel packages, e.g.
-# apt-mark hold 'linux-image*'
+PKG_HOLD="${PKG_HOLD:-linux-image*}"
+PKG_BRANCH="${PKG_BRANCH:-develop}"
+DS_BRANCH="${DS_BRANCH:-develop}"
 
+# might need to hold kernel packages, e.g.
+if [ -n "$PKG_HOLD" ]; then
+	apt-mark hold "$PKG_HOLD"
+fi
 
 # make pytyon2 from Debian 11 available
 echo 'deb http://archive.debian.org/debian/ bullseye main' >>/etc/apt/sources.list
@@ -38,7 +43,7 @@ cd ..
 # clone package repo
 git clone https://github.com/SolarNetwork/solarnet-os-packages.git
 cd solarnet-os-packages
-git switch develop
+git switch "${PKG_BRANCH}"
 cd solarnetwork-grafana-datasource/debian
 
 # clone plugin repo
@@ -46,7 +51,7 @@ git clone https://github.com/SolarNetwork/solarnetwork-grafana-datasource.git
 
 # switch desired version
 cd solarnetwork-grafana-datasource
-git checkout 2.0.0
+git checkout "${DS_BRANCH}"
 
 # install node deps
 npm ci
