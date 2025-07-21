@@ -9,10 +9,13 @@ echo 'deb http://archive.debian.org/debian/ bullseye main' >>/etc/apt/sources.li
 apt update
 
 # install requirements
-apt install -y git build-essential make golang npm python2
+apt install -y git build-essential make golang npm python2 ruby ruby-dev
 
 # make python2 the default
 update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+
+# install FPM
+gem install --no-document fpm
 
 # install NVM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
@@ -32,6 +35,12 @@ export PATH=$PATH:~/go/bin
 
 cd ..
 
+# clone package repo
+git clone https://github.com/SolarNetwork/solarnet-os-packages.git
+cd solarnet-os-packages
+git switch develop
+cd solarnetwork-grafana-datasource/debian
+
 # clone plugin repo
 git clone https://github.com/SolarNetwork/solarnetwork-grafana-datasource.git
 
@@ -45,5 +54,9 @@ npm ci
 # use custom temp dir because /tmp an run out of space
 export GOTMPDIR="/var/tmp"
 
-# build
+# build plugin
 npm run build
+
+# build package
+cd ..
+make DIST=bookworm
