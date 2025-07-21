@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # might need to hold kernel packages, e.g.
-# apt-mark hold linux-image-rpi-v8 linux-image-rpi-2712 linux-image-6.12.25+rpt-rpi-v8 linux-image-6.12.25+rpt-rpi-2712
+# apt-mark hold 'linux-image*'
 
 
 # make pytyon2 from Debian 11 available
@@ -9,7 +9,7 @@ echo 'deb http://archive.debian.org/debian/ bullseye main' >>/etc/apt/sources.li
 apt update
 
 # install requirements
-apt install git build-essential make golang npm python2
+apt install -y git build-essential make golang npm python2
 
 # make python2 the default
 update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
