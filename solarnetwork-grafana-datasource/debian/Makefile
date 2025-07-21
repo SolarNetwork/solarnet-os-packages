@@ -1,6 +1,6 @@
 NAME = solarnetwork-grafana-datasource
 DIST =
-VERSION = 2.0.0-1$(if $(DIST),+$(DIST),)
+VERSION = 3.0.0-1$(if $(DIST),+$(DIST),)
 PLUGIN_INSTALL_DIR = solarnetwork-grafana-datasource/dist
 
 deb : prep
