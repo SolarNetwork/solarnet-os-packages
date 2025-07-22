@@ -4,18 +4,18 @@ GRAFANA_CONFIG="/etc/grafana/grafana.ini"
 
 allow_unsigned () {
 	if [ -e "${GRAFANA_CONFIG}" ]; then
-		if ! grep -q 'revolve-energy-solarnetwork-datasource' "${GRAFANA_CONFIG}" 1>/dev/null 2>&1; then
+		if ! grep -q 'solarnetwork-datasource' "${GRAFANA_CONFIG}" 1>/dev/null 2>&1; then
 			echo 'Configuring allow_loading_unsigned_plugins setting to allow SolarNetwork plugin.'
 			if grep -q '^allow_loading_unsigned_plugins' "${GRAFANA_CONFIG}" 1>/dev/null 2>&1; then
 				sed -i \
-					's/^allow_loading_unsigned_plugins.*/allow_loading_unsigned_plugins = "revolve-energy-solarnetwork-datasource"/' \
+					's/^allow_loading_unsigned_plugins.*/allow_loading_unsigned_plugins = "solarnetwork-datasource"/' \
 					"${GRAFANA_CONFIG}"
 			elif grep -q 'allow_loading_unsigned_plugins' "${GRAFANA_CONFIG}" 1>/dev/null 2>&1; then
 				sed -i \
-					's/.*allow_loading_unsigned_plugins.*/allow_loading_unsigned_plugins = "revolve-energy-solarnetwork-datasource"/' \
+					's/.*allow_loading_unsigned_plugins.*/allow_loading_unsigned_plugins = "solarnetwork-datasource"/' \
 					"${GRAFANA_CONFIG}"
 			else
-				echo 'allow_loading_unsigned_plugins = "revolve-energy-solarnetwork-datasource"' \
+				echo 'allow_loading_unsigned_plugins = "solarnetwork-datasource"' \
 					>> "${GRAFANA_CONFIG}"
 			fi
 		fi
