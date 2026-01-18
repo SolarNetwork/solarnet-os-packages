@@ -4,7 +4,7 @@ On Debian 12 systems, run the [util/setup-deb12.sh](util/setup-deb12.sh) script 
 You can customize various aspects by setting environment variables, for example:
 
 ```sh
-PKG_BRANCH=feature/grafana9 DS_BRANCH=feature/grafana9 NODE_VERSION=18 ./install.sh
+PKG_BRANCH=feature/grafana9 DS_BRANCH=feature/grafana9 NODE_VERSION=18 ./setup-deb12.sh
 ```
 
 Then run the following to build the package:
