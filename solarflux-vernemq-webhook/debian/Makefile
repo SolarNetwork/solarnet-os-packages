@@ -1,6 +1,6 @@
 NAME = solarflux-vernemq-webhook
 DIST = 
-VERSION = 1.2.0-1$(if $(DIST),+$(DIST),)
+VERSION = 1.3.0-1$(if $(DIST),+$(DIST),)
 PATHS = lib usr var
 APP_BUILD_ROOT = solarflux-vernemq-webhook
 ASSEMBLE_DIR = assemble
@@ -12,14 +12,13 @@ app_version:
 	$(eval APP_VERSION = $(shell grep -E '^version\b' $(APP_BUILD_ROOT)/gradle.properties |awk -F '[[:space:]]*=[[:space:]]*' '{ print $$2; }'))
 
 build:
-	$(APP_BUILD_ROOT)/gradlew clean build -x test -p "$(APP_BUILD_ROOT)"
+	$(APP_BUILD_ROOT)/../gradlew clean nativeCompile -p "$(APP_BUILD_ROOT)"
 
 assemble: build app_version
 	rm -rf $(ASSEMBLE_DIR)
 	mkdir $(ASSEMBLE_DIR)
 	cp -a root/* $(ASSEMBLE_DIR)
-	cp -a $(APP_BUILD_ROOT)/build/libs/solarflux-vernemq-webhook-$(APP_VERSION).jar $(ASSEMBLE_DIR)/var/lib/fluxhook
-	ln -s solarflux-vernemq-webhook-$(APP_VERSION).jar $(ASSEMBLE_DIR)/var/lib/fluxhook/solarflux-vernemq-webhook.jar
+	cp -a $(APP_BUILD_ROOT)/build/build/native/nativeCompile/solarflux-webhook $(ASSEMBLE_DIR)/var/lib/fluxhook
 	find assemble \( -name .gitignore -or -name .DS_Store \) -delete
 
 package: assemble

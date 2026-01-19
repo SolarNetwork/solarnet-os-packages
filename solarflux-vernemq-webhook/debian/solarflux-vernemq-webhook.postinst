@@ -58,11 +58,6 @@ if [ ! -e "$PROD_CONF" -a -e "$PROD_CONF_SRC" ]; then
 	cp "$PROD_CONF_SRC" "$PROD_CONF"
 fi
 
-if [ ! -e "$LOG_CONF" -a -e "$LOG_CONF_SRC" ]; then
-	echo "Creating default SolarFlux Webhook logging configuration $LOG_CONF"
-	cp "$LOG_CONF_SRC" "$LOG_CONF"
-fi
-
 systemctl daemon-reload || true
 service_up fluxhook.service
 
