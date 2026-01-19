@@ -7,14 +7,10 @@ ASSEMBLE_DIR = assemble
 
 all : build assemble package
 
-app_version:
-	# extract the app version from gradle.properties
-	$(eval APP_VERSION = $(shell grep -E '^version\b' $(APP_BUILD_ROOT)/gradle.properties |awk -F '[[:space:]]*=[[:space:]]*' '{ print $$2; }'))
-
 build:
 	$(APP_BUILD_ROOT)/../gradlew clean nativeCompile -p "$(APP_BUILD_ROOT)"
 
-assemble: build app_version
+assemble: build
 	rm -rf $(ASSEMBLE_DIR)
 	mkdir $(ASSEMBLE_DIR)
 	cp -a root/* $(ASSEMBLE_DIR)
