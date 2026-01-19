@@ -22,7 +22,6 @@ package: assemble
 		-t deb \
 		-n $(NAME) \
 		-v $(VERSION) \
-		-a all \
 		-m 'packaging@solarnetwork.org.nz' \
 		--vendor 'SolarNetwork Foundation' \
 		--description 'SolarFlux Authentication VerneMQ Webhook' \
