@@ -14,7 +14,7 @@ assemble: build
 	rm -rf $(ASSEMBLE_DIR)
 	mkdir $(ASSEMBLE_DIR)
 	cp -a root/* $(ASSEMBLE_DIR)
-	cp -a $(APP_BUILD_ROOT)/build/build/native/nativeCompile/solarflux-webhook $(ASSEMBLE_DIR)/var/lib/fluxhook
+	cp -a $(APP_BUILD_ROOT)/build/native/nativeCompile/solarflux-webhook $(ASSEMBLE_DIR)/var/lib/fluxhook
 	find assemble \( -name .gitignore -or -name .DS_Store \) -delete
 
 package: assemble
