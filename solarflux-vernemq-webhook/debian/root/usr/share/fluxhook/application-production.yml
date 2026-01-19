@@ -18,6 +18,10 @@ app.audit.jdbc:
 auth:
   nodeIpMask: 10.0.0.0/16
 
+logging:
+  config: logging-production.xml
+  file.name: /var/log/fluxhook/fluxhook.log
+
 spring:
   datasource:
     url: "jdbc:postgresql://solardb-ro.solarnetwork:5432/solarnetwork?tcpKeepAlive=true"
