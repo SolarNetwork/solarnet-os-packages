@@ -18,3 +18,12 @@ build arguments, e.g.
 -R:MaxHeapSize=128m
 -R:MinHeapSize=128m
 ```
+
+If using the `snf-ops-boot` project to build the native binary, you can point this build to that
+directory, e.g.
+
+```sh
+make \
+  APP_BUILD_ROOT=/opt/sn/snf-ops-boot/solarnetwork-central/solarnet/solarflux-vernemq-webhook \
+  DIST=trixie~prod-aws
+```
