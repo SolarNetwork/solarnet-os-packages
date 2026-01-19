@@ -1,5 +1,5 @@
 NAME = vernemq
-VERNEMQ_VERSION = 1.13.0
+VERNEMQ_VERSION = 2.1.1
 VERSION = $(VERNEMQ_VERSION)-1
 VERNEMQ_DIR = vernemq
 PATHS = etc lib usr var
@@ -18,11 +18,11 @@ pkg : build assemble
 		--description 'VerneMQ MQTT broker' \
 		--license 'Apache 2.0' \
 		-f \
-		-d 'libsnappy1v5 (>= 1.1.8)' \
-		-d 'libc6 (>= 2.17)' \
-		-d 'libgcc-s1 (>= 3.0)' \
-		-d 'libssl1.1 (>= 1.1.1)' \
-		-d 'libstdc++6 (>= 5.2)' \
+		-d 'libsnappy1v5 (>= 1.2)' \
+		-d 'libc6 (>= 2.41)' \
+		-d 'libgcc-s1 (>= 14.2)' \
+		-d 'libssl3' \
+		-d 'libstdc++6 (>= 14.2)' \
 		--after-install $(NAME).postinst \
 		--before-remove $(NAME).prerm \
 		--chdir $(DEB_BUILD_ROOT) \
@@ -30,6 +30,7 @@ pkg : build assemble
 		
 clean :
 	git -C $(VERNEMQ_DIR) clean -fdxq
+	rm -rf $(VERNEMQ_DIR)/debian/vernemq/_build
 	rm -rf $(DEB_BUILD_ROOT)
 	rm -f $(NAME)_$(VERSION)_*.deb
 

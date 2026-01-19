@@ -9,6 +9,8 @@ The following software must be installed before building:
  * `build-essential`
  * `git`
  * `libsnappy-dev`
+ * `libssl-dev`
+ * `ncurses-dev`
  
 The following software must be installed before packaging:
 
@@ -20,7 +22,7 @@ Additionally the `fpm` Ruby gem must be installed.
 For example:
 
 ```sh
-sudo apt-get install ruby ruby-dev build-essential git libsnappy-dev
+sudo apt-get install ruby ruby-dev build-essential git libsnappy-dev libssl-dev ncurses-dev
 sudo gem install --no-ri --no-rdoc fpm
 ```
 
@@ -31,9 +33,16 @@ example:
 git clone https://github.com/erlang/otp.git
 cd otp
 git checkout OTP-24.2.2
+
+# if rebuilding new version:
+git clean -fdx && make clean
+
+# build into ../erlang dir
 ./configure --prefix=$PWD/../erlang
 make -j 4 && make install
 cd ..
+
+# add built erlang to PATH
 export PATH=$PWD/erlang/bin:$PATH
 ```
 
