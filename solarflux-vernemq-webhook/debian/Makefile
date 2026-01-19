@@ -8,7 +8,7 @@ ASSEMBLE_DIR = assemble
 all : build assemble package
 
 build:
-	$(APP_BUILD_ROOT)/../gradlew clean nativeCompile -p "$(APP_BUILD_ROOT)"
+	$(APP_BUILD_ROOT)/../gradlew nativeCompile -p "$(APP_BUILD_ROOT)"
 
 assemble: build
 	rm -rf $(ASSEMBLE_DIR)
@@ -38,3 +38,5 @@ package: assemble
 	
 clean : 
 	rm $(NAME)_$(VERSION)_all.deb
+	$(APP_BUILD_ROOT)/../gradlew clean
+
