@@ -28,7 +28,6 @@ package: assemble
 		--description 'SolarFlux Authentication VerneMQ Webhook' \
 		--license 'GPL 2.0' \
 		--url "https://github.com/SolarNetwork/solarnet-os-packages/tree/develop/$(NAME)/debian" \
-		--depends 'java17-runtime-headless' \
 		-f \
 		--after-install $(NAME).postinst \
 		--before-remove $(NAME).prerm \
