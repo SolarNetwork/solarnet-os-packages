@@ -18,6 +18,8 @@ ExecStartPre=/usr/lib/vernemq/bin/vernemq chkconfig
 ExecStart=/usr/lib/vernemq/bin/vernemq start
 ExecStop=/usr/lib/vernemq/bin/vernemq stop
 ExecStop=/bin/sh -c "while ps -p $MAINPID >/dev/null 2>&1; do sleep 1; done"
+Restart=always
+RestartSec=1
 
 [Install]
 WantedBy=multi-user.target
