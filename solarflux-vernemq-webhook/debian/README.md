@@ -23,6 +23,10 @@ If using the `snf-ops-boot` project to build the native binary, you can point th
 directory, e.g.
 
 ```sh
+# build the production native app
+sn-ecs-service boot-native-build solarflux-vernemq-webhook
+
+# build the production package
 make \
   APP_BUILD_ROOT=/opt/sn/snf-ops-boot/solarnetwork-central/solarnet/solarflux-vernemq-webhook \
   DIST=trixie~prod-aws
