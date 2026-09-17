@@ -1,6 +1,6 @@
 NAME = vernemq
 VERNEMQ_VERSION = 2.1.1
-VERSION = $(VERNEMQ_VERSION)-2
+VERSION = $(VERNEMQ_VERSION)-3
 VERNEMQ_DIR = vernemq
 PATHS = etc lib usr var
 DEB_BUILD_ROOT = build

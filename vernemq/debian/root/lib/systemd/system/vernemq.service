@@ -21,6 +21,11 @@ ExecStop=/bin/sh -c "while ps -p $MAINPID >/dev/null 2>&1; do sleep 1; done"
 Restart=always
 RestartSec=1
 
+LimitNOFILE=65536
+MemoryHigh=520M
+MemoryMax=600M
+OOMScoreAdjust=-500
+
 [Install]
 WantedBy=multi-user.target
 
