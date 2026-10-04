@@ -1,7 +1,8 @@
 NAME = solarnetwork-grafana-datasource
 DIST =
-VERSION = 2.0.0-1$(if $(DIST),+$(DIST),)
-PLUGIN_INSTALL_DIR = solarnetwork-grafana-datasource/dist
+VERSION = 4.0.0-1$(if $(DIST),+$(DIST),)
+PLUGIN_BUILD_DIR = solarnetwork-grafana-datasource/dist
+PLUGIN_INSTALL_DIR = var/lib/grafana/plugins/solarnetwork-solarnetwork-datasource
 
 deb : prep
 	fpm -s dir \
@@ -16,16 +17,17 @@ deb : prep
 		--url "https://github.com/SolarNetwork/solarnet-os-packages/tree/develop/solarnetwork-grafana-datasource/debian" \
 		--force \
 		--after-install $(NAME).postinst \
-		--depends 'grafana (>= 10)' \
+		--depends 'grafana (>= 12.1) | grafana-enterprise (>= 12.1)' \
 		var
 
 prep :
-	mkdir -p var/lib/grafana/plugins
-	cp -av $(PLUGIN_INSTALL_DIR) var/lib/grafana/plugins/solarnetwork-datasource
-	rm -f var/lib/grafana/plugins/solarnetwork-datasource/*darwin*
-	rm -f var/lib/grafana/plugins/solarnetwork-datasource/*windows*
-	rm -f var/lib/grafana/plugins/solarnetwork-datasource/*arm
+	mkdir -p $(PLUGIN_INSTALL_DIR)
+	cp -av $(PLUGIN_BUILD_DIR)/* $(PLUGIN_INSTALL_DIR)
+	rm -f $(PLUGIN_INSTALL_DIR)/*darwin*
+	rm -f $(PLUGIN_INSTALL_DIR)/*windows*
+	rm -f $(PLUGIN_INSTALL_DIR)/*arm
 
 clean :
+	rm -rf var
 	rm -f $(NAME)_$(VERSION)*.deb
 
