@@ -1,13 +1,26 @@
 # SolarNetwork Grafana Data Source package
 
-On Debian 12 systems, run the [util/setup-deb12.sh](util/setup-deb12.sh) script to build the plugin.
-Then:
+Installs the [SolarNetwork Grafana data source][plugin] plugin. The plugin is unsigned, so the
+package also tells Grafana to allow it, with a `grafana-server` service drop-in.
+
+# Building
+
+Build with Docker:
 
 ```sh
-make DIST=bookworm
+util/build-docker.sh bookworm
 ```
 
-> :tip: **Note** that the package will be for all architectures, but only `arm64` and `amd64` are
+Or on a Debian 12 system, run the [util/setup-deb12.sh](util/setup-deb12.sh) script. If you already
+have `node` 22, `go`, `mage` and `fpm`, run:
+
+```sh
+make plugin deb DIST=bookworm
+```
+
+> :tip: **Note** that the package is for all architectures, but only `arm64` and `amd64` are
 > actually supported.
 
 > :warning: **Note** that the plugin build requires a few GB of disk space to complete.
+
+[plugin]: https://github.com/SolarNetwork/solarnetwork-grafana-datasource
