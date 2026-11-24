@@ -20,9 +20,8 @@ deb : prep
 		--url "https://github.com/SolarNetwork/solarnet-os-packages/tree/develop/solarnetwork-grafana-datasource/debian" \
 		--force \
 		--after-install $(NAME).postinst \
-		--after-remove $(NAME).postrm \
 		--depends 'grafana (>= 12.1) | grafana-enterprise (>= 12.1)' \
-		var lib
+		var
 
 prep :
 	test -x $(PLUGIN_BUILD_DIR)/gpx_solarnetwork_datasource_linux_amd64
@@ -34,8 +33,7 @@ prep :
 	rm -f $(PLUGIN_INSTALL_DIR)/*windows*
 	rm -f $(PLUGIN_INSTALL_DIR)/*arm
 	rm -f $(PLUGIN_INSTALL_DIR)/*.map
-	find var lib -type d -exec chmod 755 {} +
-	find lib -type f -exec chmod 644 {} +
+	find var -type d -exec chmod 755 {} +
 
 plugin :
 	[ -d $(PLUGIN_SRC_DIR) ] || git clone $(PLUGIN_GIT_URL) $(PLUGIN_SRC_DIR)

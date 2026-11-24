@@ -1,7 +1,6 @@
 # SolarNetwork Grafana Data Source package
 
-Installs the [SolarNetwork Grafana data source][plugin] plugin. The plugin is unsigned, so the
-package also tells Grafana to allow it, with a `grafana-server` service drop-in.
+Installs the [SolarNetwork Grafana data source][plugin] plugin.
 
 # Building
 

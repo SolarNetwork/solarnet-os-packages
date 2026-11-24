@@ -1,9 +1,43 @@
 #!/bin/sh -e
 
-# The drop-in in grafana-server.service.d lets Grafana load the unsigned plugin.
+GRAFANA_CONFIG="/etc/grafana/grafana.ini"
+PLUGIN_ID="solarnetwork-solarnetwork-datasource"
+KEY="allow_loading_unsigned_plugins"
 
-if [ "$1" = "configure" ] && [ -d /run/systemd/system ]; then
-	systemctl daemon-reload || true
+# sed address of the [plugins] section: from its header to the next section header
+PLUGINS='/^\[plugins\]/,/^\[/'
+
+plugins_section () {
+	sed -n "${PLUGINS}p" "${GRAFANA_CONFIG}"
+}
+
+# Add the plugin to the allow_loading_unsigned_plugins list in grafana.ini, keeping any plugins
+# already listed.
+allow_unsigned () {
+	if [ ! -e "${GRAFANA_CONFIG}" ] || plugins_section | grep -q "^${KEY} *=.*${PLUGIN_ID}"; then
+		return 0
+	fi
+	echo 'Configuring allow_loading_unsigned_plugins setting to allow SolarNetwork plugin.'
+	if plugins_section | grep -q "^${KEY} *= *\"\{0,1\}[^\" ]"; then
+		# add to the existing list, removing any quotes around it first
+		sed -i \
+			-e "${PLUGINS} s/^\(${KEY} *= *\)\"\(.*\)\" *\$/\1\2/" \
+			-e "${PLUGINS} s/^${KEY} *=.*[^ ]/&,${PLUGIN_ID}/" \
+			"${GRAFANA_CONFIG}"
+	elif plugins_section | grep -q "^[;#]* *${KEY} *="; then
+		# replace the commented-out or empty setting, as in the default grafana.ini
+		sed -i "${PLUGINS} s/^[;#]* *${KEY} *=.*/${KEY} = ${PLUGIN_ID}/" "${GRAFANA_CONFIG}"
+	elif grep -q '^\[plugins\]' "${GRAFANA_CONFIG}"; then
+		sed -i "/^\[plugins\]/a ${KEY} = ${PLUGIN_ID}" "${GRAFANA_CONFIG}"
+	else
+		printf '\n[plugins]\n%s = %s\n' "${KEY}" "${PLUGIN_ID}" >>"${GRAFANA_CONFIG}"
+	fi
+}
+
+if [ "$1" = "configure" ]; then
+	allow_unsigned
 	# restart only if already running, so a new or changed plugin is loaded
-	systemctl try-restart grafana-server.service || true
+	if [ -d /run/systemd/system ]; then
+		systemctl try-restart grafana-server.service || true
+	fi
 fi
