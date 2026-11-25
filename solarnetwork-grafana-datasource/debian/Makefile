@@ -37,7 +37,8 @@ prep :
 
 plugin :
 	[ -d $(PLUGIN_SRC_DIR) ] || git clone $(PLUGIN_GIT_URL) $(PLUGIN_SRC_DIR)
-	git -C $(PLUGIN_SRC_DIR) fetch -q origin
+	git -C $(PLUGIN_SRC_DIR) cat-file -e $(PLUGIN_GIT_REF)^{commit} 2>/dev/null \
+		|| git -C $(PLUGIN_SRC_DIR) fetch -q $(PLUGIN_GIT_URL) $(PLUGIN_GIT_REF)
 	git -C $(PLUGIN_SRC_DIR) checkout -q --detach $(PLUGIN_GIT_REF)
 	cd $(PLUGIN_SRC_DIR) && npm ci --no-audit --no-fund && npm run build
 	cd $(PLUGIN_SRC_DIR) && mage -v build:linux build:linuxARM64
